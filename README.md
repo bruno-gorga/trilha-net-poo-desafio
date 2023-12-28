@@ -39,6 +39,7 @@ Para criar um novo celular, basta digitar a opção 1 no menu.
 Após isso, será solicitado que o usuário o fabricante do celular que deseja comprar: Nokia ou iPhone.
 
 ![](https://imgur.com/L7ADZcC.png)
+
 Após isso, o usuário precisará digitar o estado em que reside, para que a loja possa fornecer uma linha telefônica disponível.
 
 ![](https://imgur.com/ojha5Rl.png)

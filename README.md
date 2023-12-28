@@ -33,15 +33,20 @@ O programa faz uso de um menu que simula uma loja de celulares. Nele, o usuário
 ## 2. Usando a aplicação e navegando pelo menu
 ### 2.1 Criando um novo celular
 Para criar um novo celular, basta digitar a opção 1 no menu.
+
 ![](https://imgur.com/D9tkmp7.png)
 
 Após isso, será solicitado que o usuário o fabricante do celular que deseja comprar: Nokia ou iPhone.
+
 ![](https://imgur.com/L7ADZcC.png)
 Após isso, o usuário precisará digitar o estado em que reside, para que a loja possa fornecer uma linha telefônica disponível.
+
 ![](https://imgur.com/ojha5Rl.png)
+
 Assim como na vida real, dependendo do estado que o usuário digitar, seu número telefônico terá um DDD diferente, como por ex. (11) para São Paulo, (21) para Rio de Janeiro, etc.
 
 Em seguida, a aplicação irá pedir para que o usuário escolha a memória RAM que o celular possui, assim como na vida real, o aparelho pode ter uma memória de 4 GB, 8 GB ou 16 GB.
+
 ![](https://imgur.com/vBsfHUL.png)
 
 A aplicação então fornecerá um telefône para o usuário, que será sua linha, irá gerar o número IMEI do telefone e, ao fim, imprimirá na tela a nota fiscal da compra com a data da compra e as informações sobre o aparelho.
@@ -49,8 +54,8 @@ A aplicação então fornecerá um telefône para o usuário, que será sua linh
 ![](https://imgur.com/UIjqFJi.png)
 
 Mais exemplos de criação de aparelhos:
-![](https://imgur.com/ZSYmYVA.png)
 
+![](https://imgur.com/ZSYmYVA.png)
 ![](https://imgur.com/DqqXJIt.png)
 ![](https://imgur.com/gPmTUhl.png)
 ![](https://imgur.com/DhHcLqL.png)
@@ -58,26 +63,34 @@ Mais exemplos de criação de aparelhos:
 
 ### 2.2 Usando um celular
 Após os celulares serem criados, ficará disponível para o usuário digitar a opção 2 no menu inicial, acessando o aparelho e suas funcionalidades.
-![](https://imgur.com/NkSU20B.png)
 
+![](https://imgur.com/NkSU20B.png)
 ![](https://imgur.com/E2yVvxS.png)
 
 Como exemplo, vamos selecionar nosso celular Nokia.
+
 ![](https://imgur.com/hCrnPHC.png)
 
 Realizando uma ligação com o celular:
+
 ![](https://imgur.com/KbmaOGh.png)
+
 Recebendo uma ligação:
+
 ![](https://imgur.com/0odQcJ4.png)
 
 Instalando o aplicativo Waze, aqui, no celular Nokia, a instalação é feita com um contador de tempo até o aplicativo ser instalado.
+
 ![](https://imgur.com/3i0tpl6.png)
+
 O contador começa em 60 segundos e vai reduzindo até 0, quando a instalação é concluída.
+
 
 ![](https://imgur.com/IqaeK5a.png)
 ![](https://imgur.com/B3WpJwm.png)
 
 Na versão iPhone do aparelho, as funcionalidades Ligar e Receber Ligação são as mesmas, porém a funcionalidade de instalação é gerenciada por uma barra de carregamento que, ao completar 100%, exibe a mensagem de instalação concluída. A barra vai aumentando conforme a instalação avança.
+
 
 ![](https://imgur.com/Sdnh9Pm.png)
 ![enter image description here](https://imgur.com/iVtMaEt.png)
@@ -86,6 +99,7 @@ Na versão iPhone do aparelho, as funcionalidades Ligar e Receber Ligação são
 ![](https://imgur.com/fDGEsht.png)
 
 Ao finalizar, o usuário pode retornar ao menu inicial teclando a opção 3.
+
 ![enter image description here](https://imgur.com/Zq4Ln6j.png)
 ![](https://imgur.com/BnUqDJ7.png)
 
@@ -93,21 +107,26 @@ Ao finalizar, o usuário pode retornar ao menu inicial teclando a opção 3.
 ## 3. Validação e testes
 ### 3.1 Usando o celular sem tê-lo criado anteriormente
 Quando o usuário tenta utilizar a funcionalidade de acesso ao aparelho sem tê-lo criado previamente, a aplicação exibe uma mensagem informando que o aparelho não está disponível e retorna ao menu anterior inicial automaticamente.
+
 ![](https://imgur.com/0uQ35Au.png)
 ![](https://imgur.com/xjMnA7X.png)
 
 ### 3.2. Validando os fabricantes
 Caso o usuário informe um fabricante inexistente (que não seja iPhone ou Nokia), a aplicação retorna um erro dizendo que o modelo não está disponível e pede que novamente seja inserido o fabricante.
+
 ![](https://imgur.com/NxWWZcC.png)
 ![](https://imgur.com/wmPz0zy.png)
 
 A mensagem de erro só desaparecerá quando a entrada for válida.
+
 ![](https://imgur.com/HqZ2g6m.png)
 
 ### 3.3. Validando os estados
 Se o usuário digitar um estado que não seja válido, isto é, que não esteja dentro das 26 UFs do Brasil e o Distrito Federal, o programa exibirá um erro dizendo que o estado é inválido.
+
 ![](https://imgur.com/6HQ3eGQ.png)
 ![](https://imgur.com/zL5kor2.png)
+
 Somente após se inserir um estado válido é que o programa avançará para a próxima fase.
 ### 3.3. Validando a memória
 Caso a opção de memória seja inválida, o programa apresentará uma mensagem dizendo que não há aparelhos para aquela memória, prosseguindo apenas caso a memória seja 4, 8 ou 16 GB.

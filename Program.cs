@@ -41,9 +41,12 @@ string estado = "";
 string fabricante = "";
 var dataDaCompra = DateTime.Now;
 int memoriaDoCelular = 0;
+string memoriaDoCelularEntrada = "";
 string opcaoCelular = "";
 string opcaoIphone = "";
 string opcaoNokia = "";
+bool temCelularDisponivelNokia = false;
+bool temCelularDisponivelIphone = false;
 
 string opcaoMenu = MenuPrincipal();
 while(opcaoMenu != "3")
@@ -55,13 +58,28 @@ while(opcaoMenu != "3")
                 Console.WriteLine("Digite o fabricante do celular que deseja (Nokia/iPhone):");
                 fabricante = Console.ReadLine();
                 while (fabricante != "Nokia" && fabricante != "iPhone")
-                {
+                {   
+                    Console.Clear();
                     Console.WriteLine("Erro. Modelo não disponível. Escolha novamente: ");
                     fabricante = Console.ReadLine();
                 }
 
                 Console.WriteLine("Digite seu estado: ");
                 estado = Console.ReadLine();
+                
+                // Fazendo validação do estado digitado
+                string [] estados = { "DF", "SP", "RJ", "ES", "MG", "RS", "SC", "PR", "MS", "MT", "GO", 
+                "AM", "PA", "TO", "RO", "RR", "AP", "AC",
+                "BA", "AL", "CE", "PE", "PI", "RN", "SE", "PB", "MA" };
+                
+                while(estados.Contains(estado) == false)
+                {
+                    Console.Clear();
+                    Console.WriteLine("Erro! Estado inválido. Digite novamente: ");
+                    estado = Console.ReadLine();
+                }
+
+
                 // Cada estado tem o seu próprio DDD. Minha intenção foi simular uma compra de celular em uma loja, 
                 // na qual o cliente precisa escolher os números disponíveis de uma operadora.
                 if (estado == "DF")
@@ -264,16 +282,19 @@ while(opcaoMenu != "3")
                 // de memória RAM
                 
                 Console.WriteLine("Digite a memória que você deseja (4, 8, 16): ");
-                memoriaDoCelular = Convert.ToInt32(Console.ReadLine());
+                memoriaDoCelularEntrada = Console.ReadLine();
                 
                 // Verificação da entrada de dados
-                if (memoriaDoCelular != 4 && memoriaDoCelular != 8 && memoriaDoCelular != 16)
+                while (memoriaDoCelularEntrada != "4" && memoriaDoCelularEntrada != "8" && memoriaDoCelularEntrada != "16")
                 {
-                    Console.WriteLine("Erro. Digite novamente: ");
-                    memoriaDoCelular = Convert.ToInt32(Console.ReadLine());
+                    Console.Clear();
+                    Console.WriteLine("Erro. Não há aparelhos com a memória selecionada. Digite novamente: ");
+                    memoriaDoCelularEntrada = Console.ReadLine();
                 }
-                Console.WriteLine($"Memória selecionada: {memoriaDoCelular} GB");
+                Console.WriteLine($"Memória selecionada: {memoriaDoCelularEntrada} GB");
 
+                memoriaDoCelular = Convert.ToInt32(memoriaDoCelularEntrada);
+                
                 // Gerando número IMEI para o celular
                 for (int i = 0; i <= 17; i++)
                 {
@@ -285,6 +306,7 @@ while(opcaoMenu != "3")
                 if (fabricante == "Nokia")
                 {
                     Nokia celularNokia = new Nokia(numeroDeCelular, fabricante, numeroImei, memoriaDoCelular);
+                    temCelularDisponivelNokia = true;
                     Thread.Sleep(200);
                     Console.Clear();
                     Console.WriteLine("Celular Nokia comprado!");
@@ -305,6 +327,7 @@ while(opcaoMenu != "3")
                 else if (fabricante == "iPhone")
                 {
                     Iphone celularIphone = new Iphone(numero, fabricante, numeroImei, memoriaDoCelular);
+                    temCelularDisponivelIphone = true;
                     Thread.Sleep(200);
                     Console.Clear();
                     Console.WriteLine("Celular iPhone comprado!");
@@ -338,120 +361,147 @@ while(opcaoMenu != "3")
                     Console.WriteLine("1 - Nokia\n2 - iPhone\n3 - Voltar");
                     opcaoCelular = Console.ReadLine();
                 }
+                // Acessando o celular Nokia
                 if (opcaoCelular == "1")
                 {
-                    Console.Clear();
-                    Nokia celularNokia = new Nokia(numeroDeCelular, fabricante, numeroImei, memoriaDoCelular);
-                    Console.WriteLine("Opção selecionada: Nokia");
-                    Console.WriteLine("1 - Ligar\n2 - Receber uma ligação\n3 - Instalar um Aplicativo\n4 - Voltar ao menu anterior");
-                    Console.WriteLine("Digite sua opção: ");
-                    opcaoNokia = Console.ReadLine();
-                    while (opcaoNokia != "1" && opcaoNokia != "2" && opcaoNokia != "3" && opcaoNokia != "4")
+                    // Caso o usuário não tenha criado um celular Nokia anteriormente
+                    if (temCelularDisponivelNokia == false)
                     {
                         Console.Clear();
-                        Console.WriteLine("Erro. Opção inválida. Digite novamente.");
+                        Console.WriteLine("Não há nenhum celular Nokia disponível.");
+                        Thread.Sleep(500); // O método Thread.Sleep foi colocado para que o usuário possa ler o motivo pelo qual a operação selecionada não pode ser executada
+                        Console.WriteLine("1 - Nokia\n2 - iPhone\n3 - Voltar ao menu inicial");
+                        string opcaoCelulariPhone = Console.ReadLine();
+                        opcaoCelular = opcaoCelulariPhone;
+                    }
+                    else
+                    {
+                        Console.Clear();
+                        Nokia celularNokia = new Nokia(numeroDeCelular, fabricante, numeroImei, memoriaDoCelular);
+                        Console.WriteLine("Opção selecionada: Nokia");
                         Console.WriteLine("1 - Ligar\n2 - Receber uma ligação\n3 - Instalar um Aplicativo\n4 - Voltar ao menu anterior");
                         Console.WriteLine("Digite sua opção: ");
                         opcaoNokia = Console.ReadLine();
-                    }
-                    switch (opcaoNokia)
-                    {
-                        case "1":
+                        // Validando a opção de uso do celular
+                        while (opcaoNokia != "1" && opcaoNokia != "2" && opcaoNokia != "3" && opcaoNokia != "4")
+                        {
                             Console.Clear();
-                            celularNokia.Ligar();
-                            Thread.Sleep(300);
-                            Console.WriteLine("Ligação concluída.");
-                            Console.WriteLine();
-                            Console.WriteLine("Aperte qualquer tecla para continuar");
-                            Console.ReadLine();
-                            Console.Clear();
-                            break;
-                        case "2":
-                            Console.Clear();
-                            celularNokia.ReceberLigacao();
-                            Thread.Sleep(80);
-                            Console.WriteLine("Ligação concluída.");
-                            Console.WriteLine();
-                            Console.WriteLine("Aperte qualquer tecla para continuar");
-                            Console.ReadLine();
-                            Console.Clear();
-                            break;
-                        case "3":
-                            Console.Clear();
-                            Console.WriteLine("Digite o nome do aplicativo que deseja instalar: ");
-                            celularNokia.InstalarAplicativo(Console.ReadLine());
-                            Console.WriteLine();
-                            Console.WriteLine("Aperte qualquer tecla para continuar.");
-                            Console.ReadLine();
-                            Console.Clear();
-                            break;
-                        case "4":
-                            Console.Clear();
-                            Console.WriteLine("Digite o celular que gostaria de acessar: ");
-                            Console.WriteLine("1 - Nokia\n2 - iPhone\n3 - Voltar ao menu inicial");
-                            opcaoCelular = Console.ReadLine();
-                            break;
-                        default:
-                            Console.WriteLine("Opção inválida! Tente novamente!");
-                            break;
+                            Console.WriteLine("Erro. Opção inválida. Digite novamente.");
+                            Console.WriteLine("1 - Ligar\n2 - Receber uma ligação\n3 - Instalar um Aplicativo\n4 - Voltar ao menu anterior");
+                            Console.WriteLine("Digite sua opção: ");
+                            opcaoNokia = Console.ReadLine();
+                        }
+                        switch (opcaoNokia)
+                        {
+                            case "1":
+                                Console.Clear();
+                                celularNokia.Ligar();
+                                Thread.Sleep(300);
+                                Console.WriteLine("Ligação concluída.");
+                                Console.WriteLine();
+                                Console.WriteLine("Aperte qualquer tecla para continuar");
+                                Console.ReadLine();
+                                Console.Clear();
+                                break;
+                            case "2":
+                                Console.Clear();
+                                celularNokia.ReceberLigacao();
+                                Thread.Sleep(80);
+                                Console.WriteLine("Ligação concluída.");
+                                Console.WriteLine();
+                                Console.WriteLine("Aperte qualquer tecla para continuar");
+                                Console.ReadLine();
+                                Console.Clear();
+                                break;
+                            case "3":
+                                Console.Clear();
+                                Console.WriteLine("Digite o nome do aplicativo que deseja instalar: ");
+                                celularNokia.InstalarAplicativo(Console.ReadLine());
+                                Console.WriteLine();
+                                Console.WriteLine("Aperte qualquer tecla para continuar.");
+                                Console.ReadLine();
+                                Console.Clear();
+                                break;
+                            case "4":
+                                Console.Clear();
+                                Console.WriteLine("Digite o celular que gostaria de acessar: ");
+                                Console.WriteLine("1 - Nokia\n2 - iPhone\n3 - Voltar ao menu inicial");
+                                opcaoCelular = Console.ReadLine();
+                                break;
+                            default:
+                                Console.WriteLine("Opção inválida! Tente novamente!");
+                                break;
+                        }
                     }
                 }
                 else if (opcaoCelular == "2")
                 {
-                    Console.Clear();
-                    Iphone celularIphone = new Iphone(numero, fabricante, numeroImei, memoriaDoCelular);
-                    Console.WriteLine("Opção selecionada: iPhone");
-                    Console.WriteLine("1 - Ligar\n2 - Receber uma ligação\n3 - Instalar um Aplicativo\n4 - Voltar ao menu anterior");
-                    Console.WriteLine("Digite sua opção: ");
-                    opcaoIphone = Console.ReadLine();
-                    while (opcaoIphone != "1" && opcaoIphone != "2" && opcaoIphone != "3" && opcaoIphone != "4")
+                    // Caso o usuário não tenha criado um telefone iPhone anteriormente
+                    if (temCelularDisponivelIphone == false)
                     {
                         Console.Clear();
-                        Console.WriteLine("Erro. Opção inválida. Digite novamente.");
+                        Console.WriteLine("Não há nenhum celular iPhone disponível.");
+                        Thread.Sleep(500);
+                        Console.WriteLine("1 - Nokia\n2 - iPhone\n3 - Voltar ao menu inicial");
+                        string opcaoCelulariPhone = Console.ReadLine();
+                        opcaoCelular = opcaoCelulariPhone;
+                    }
+                    else{
+                        Console.Clear();
+                        Iphone celularIphone = new Iphone(numero, fabricante, numeroImei, memoriaDoCelular);
+                        Console.WriteLine("Opção selecionada: iPhone");
                         Console.WriteLine("1 - Ligar\n2 - Receber uma ligação\n3 - Instalar um Aplicativo\n4 - Voltar ao menu anterior");
                         Console.WriteLine("Digite sua opção: ");
                         opcaoIphone = Console.ReadLine();
-                    }
-                    switch (opcaoIphone)
-                    {
-                        case "1":
+                        while (opcaoIphone != "1" && opcaoIphone != "2" && opcaoIphone != "3" && opcaoIphone != "4")
+                        {
                             Console.Clear();
-                            celularIphone.Ligar();
-                            Thread.Sleep(80);
-                            Console.WriteLine("Ligação concluída.");
-                            Console.WriteLine();
-                            Console.WriteLine("Aperte qualquer tecla para continuar");
-                            Console.ReadLine();
-                            Console.Clear();
-                            break;
-                        case "2":
-                            Console.Clear();
-                            celularIphone.ReceberLigacao();
-                            Thread.Sleep(80);
-                            Console.WriteLine("Ligação concluída.");
-                            Console.WriteLine();
-                            Console.WriteLine("Aperte qualquer tecla para continuar");
-                            Console.ReadLine();
-                            Console.Clear();
-                            break;
-                        case "3":
-                            Console.Clear();
-                            Console.WriteLine("Digite o nome do aplicativo que deseja instalar: ");
-                            celularIphone.InstalarAplicativo(Console.ReadLine());
-                            Console.WriteLine();
-                            Console.WriteLine("Aperte qualquer tecla para continuar.");
-                            Console.ReadLine();
-                            Console.Clear();
-                            break;
-                        case "4":
-                            Console.Clear();
-                            Console.WriteLine("Digite o celular que gostaria de acessar: ");
-                            Console.WriteLine("1 - Nokia\n2 - iPhone\n3 - Voltar ao menu inicial");
-                            opcaoCelular = Console.ReadLine();
-                            break;
-                        default:
-                            Console.WriteLine("Opção inválida! Tente novamente!");
-                            break;
+                            Console.WriteLine("Erro. Opção inválida. Digite novamente.");
+                            Console.WriteLine("1 - Ligar\n2 - Receber uma ligação\n3 - Instalar um Aplicativo\n4 - Voltar ao menu anterior");
+                            Console.WriteLine("Digite sua opção: ");
+                            opcaoIphone = Console.ReadLine();
+                        }
+                        switch (opcaoIphone)
+                        {
+                            case "1":
+                                Console.Clear();
+                                celularIphone.Ligar();
+                                Thread.Sleep(80);
+                                Console.WriteLine("Ligação concluída.");
+                                Console.WriteLine();
+                                Console.WriteLine("Aperte qualquer tecla para continuar");
+                                Console.ReadLine();
+                                Console.Clear();
+                                break;
+                            case "2":
+                                Console.Clear();
+                                celularIphone.ReceberLigacao();
+                                Thread.Sleep(80);
+                                Console.WriteLine("Ligação concluída.");
+                                Console.WriteLine();
+                                Console.WriteLine("Aperte qualquer tecla para continuar");
+                                Console.ReadLine();
+                                Console.Clear();
+                                break;
+                            case "3":
+                                Console.Clear();
+                                Console.WriteLine("Digite o nome do aplicativo que deseja instalar: ");
+                                celularIphone.InstalarAplicativo(Console.ReadLine());
+                                Console.WriteLine();
+                                Console.WriteLine("Aperte qualquer tecla para continuar.");
+                                Console.ReadLine();
+                                Console.Clear();
+                                break;
+                            case "4":
+                                Console.Clear();
+                                Console.WriteLine("Digite o celular que gostaria de acessar: ");
+                                Console.WriteLine("1 - Nokia\n2 - iPhone\n3 - Voltar ao menu inicial");
+                                opcaoCelular = Console.ReadLine();
+                                break;
+                            default:
+                                Console.WriteLine("Opção inválida! Tente novamente!");
+                                break;
+                        }
                     }
                 }
                 else if (opcaoCelular == "3")

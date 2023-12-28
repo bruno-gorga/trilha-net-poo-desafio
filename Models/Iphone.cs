@@ -25,7 +25,7 @@ namespace DesafioPOO.Models
                     {
                     barraDeCarregamento = barraDeCarregamento + "*****";
                     }
-                    Thread.Sleep(400);
+                    Thread.Sleep(350);
                 }
             
                 Console.WriteLine($"O aplicativo '{nomeApp}' foi instalado com sucesso!");
